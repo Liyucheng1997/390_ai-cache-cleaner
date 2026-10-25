@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="token" content="__TOKEN__">
+<title>AI 缓存清理</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Crect x='7' y='7' width='9' height='18' rx='2' fill='%2330a46c'/%3E%3Crect x='18' y='7' width='7' height='8' rx='1.6' fill='%23e5b720'/%3E%3Crect x='18' y='17' width='7' height='8' rx='1.6' fill='%23e5732e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<div id="app">
+  <header class="titlebar">
+    <div class="logo-mark" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 18 18"><rect x="1" y="1" width="9" height="16" rx="2" fill="currentColor"/><rect x="11.5" y="1" width="5.5" height="7" rx="1.6" fill="currentColor" opacity=".7"/><rect x="11.5" y="9.5" width="5.5" height="7.5" rx="1.6" fill="currentColor" opacity=".45"/></svg>
+    </div>
+    <div class="brand">
+      <div class="brand-name">AI 缓存清理</div>
+      <div class="brand-sub">看清 AI 编程工具占用了多少空间</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="disk" id="disk" hidden>
+      <div class="disk-text"><span id="diskLabel"></span><span class="muted tabular" id="diskFree"></span></div>
+      <div class="disk-bar"><div class="disk-used" id="diskUsed"></div><div class="disk-ai" id="diskAi"></div></div>
+    </div>
+    <button class="btn" id="btnScan"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>重新扫描</button>
+    <button class="tb-round" id="btnTheme" title="切换深色 / 浅色"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </header>
+
+  <section class="stats" id="stats"></section>
+
+  <main class="main">
+    <section class="card map-card">
+      <div class="map-head">
+        <div class="map-title">
+          <div class="crumbs" id="crumbs"></div>
+          <div class="map-hint muted">方块越大占用越多 · 点击方块看详情 · 点右上角圆圈加入清理</div>
+        </div>
+        <div class="map-controls">
+          <div class="seg" id="segColor" role="tablist" aria-label="颜色">
+            <button data-v="priority" class="active">按优先级</button>
+            <button data-v="tool">按工具</button>
+            <button data-v="category">按类型</button>
+          </div>
+          <div class="seg" id="segSize" role="tablist" aria-label="大小">
+            <button data-v="total" class="active">总占用</button>
+            <button data-v="clean">可清理</button>
+          </div>
+        </div>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="map-wrap">
+        <div class="treemap" id="treemap"></div>
+        <div class="map-overlay" id="overlay">
+          <div class="spinner"></div>
+          <div class="ov-title" id="ovTitle">正在扫描…</div>
+          <div class="ov-sub muted tabular" id="ovSub"></div>
+          <div class="ov-bar"><div id="ovBar"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card side">
+      <div class="side-view" id="viewList">
+        <div class="side-head">
+          <div class="side-title">清理建议</div>
+          <div class="quick">
+            <button class="chip" data-quick="1">选中安全项</button>
+            <button class="chip" data-quick="2">安全 + 建议</button>
+            <button class="chip" data-quick="0">清空</button>
+          </div>
+        </div>
+        <div class="list" id="list"></div>
+      </div>
+      <div class="side-view detail" id="viewDetail" hidden></div>
+      <footer class="side-foot">
+        <div class="seg seg-full" id="segMode">
+          <button data-v="recycle" class="active">移到回收站</button>
+          <button data-v="delete">永久删除</button>
+        </div>
+        <div class="foot-row">
+          <div class="foot-sum"><div class="muted" id="selCount">未选择</div><div class="foot-size tabular" id="selSize">0 B</div></div>
+          <button class="btn btn-primary btn-lg" id="btnClean" disabled>开始清理</button>
+        </div>
+      </footer>
+    </aside>
+  </main>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+<div class="toast-host" id="toasts"></div>
+<script src="/assets/app.js"></script>
+</body>
+</html>
