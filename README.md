@@ -14,7 +14,7 @@
 
 ## 使用
 
-直接运行打包好的 `dist\AICacheCleaner.exe`。
+到 [Releases](https://github.com/Liyucheng1997/ai-cache-cleaner/releases/latest) 下载 `AICacheCleaner-*-win-x64.exe`，双击运行即可（Windows 10/11，无需安装 Python）。未签名程序首次运行时 SmartScreen 可能提示，选择「仍要运行」。
 
 从源码运行（需要 Python 3.10+）：
 
